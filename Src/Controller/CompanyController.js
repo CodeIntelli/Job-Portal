@@ -2,6 +2,7 @@ import { CompanyModel, TokenModel } from "../Models";
 import { ErrorHandler, SendToken, SendEmail, Encryption } from "../Services";
 import { FRONTEND_URL } from "../../Config";
 import crypto from "crypto";
+// https://github1s.com/b30wulffz/job-portal/blob/HEAD/backend/db/JobApplicant.js#L13-L41
 import cloudinary from "cloudinary";
 const CompanyController = {
   async registerUser(req, res, next) {
