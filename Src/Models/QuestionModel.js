@@ -3,14 +3,8 @@ import mongoose from "mongoose";
 const QuestionSchema = new mongoose.Schema({
   jobId: { type: mongoose.mongoose.Schema.Types.ObjectId, ref: "Job" },
   questions: {
-    question: {
-      type: String,
-      required: true,
-    },
-    answer: {
-      type: String,
-      default: "",
-    },
+    type: String,
+    required: true,
   },
 });
 

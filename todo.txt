@@ -1,0 +1,44 @@
+[ . ] Database Field :-
+
+@Attribute:- Company Model:-
+@Params: name
+@Params: companyEmail
+@Params: companyPANCard
+@Params: companyPassword
+@Params: profilePicture
+@Params: verified
+@Params: role
+@Params: establishAt
+@Params: bio
+@Params: phone
+@Params: createdAt
+@Params: companyIp
+@Params: companyLocation
+
+
+
+@Attribute:- Job Model:-
+@Params: companyId
+@Params: jobTitle
+@Params: jobDesc
+@Params: maxApplicant
+@Params: maxPosition
+@Params: activeApplicant
+@Params: acceptedCandidate
+@Params: dateOfPosting
+@Params: dueDate
+@Params: skills
+@Params: jobType
+@Params: salary
+@Params: duration
+@Params: applyUrl
+
+@Attribute:- Question Model:-
+@Params: jobId
+@Params: questions
+
+@Attribute:- Answer Model:-
+@Params: questionId
+@Params: companyId
+@Params: userId
+@Params: answers
