@@ -6,7 +6,7 @@ import {
   CLOUD_NAME,
   CLOUD_API_KEY,
   CLOUD_API_SECRET,
-} from "./config";
+} from "./Config";
 import { UserRoutes,CompanyRoutes,JobRoutes,QuestionRoutes } from "./Src/Routes";
 import "./Src/Database";
 import cors from "cors";
