@@ -7,7 +7,7 @@ import {
   CLOUD_API_KEY,
   CLOUD_API_SECRET,
 } from "./config";
-import { UserRoutes } from "./Src/Routes";
+import { UserRoutes,CompanyRoutes,JobRoutes,QuestionRoutes } from "./Src/Routes";
 import "./Src/Database";
 import cors from "cors";
 import { Error } from "./Src/Middleware";
@@ -29,6 +29,7 @@ app.use(fileUpload({ useTempFiles: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 // todo: All Routes Declare Here
 app.use("/api/v1/auth", UserRoutes);
+app.use("/api/v1/company", CompanyRoutes);
 
 //* Middleware for Error
 app.use(Error);

@@ -1,5 +1,4 @@
 [ . ] Database Field :-
-
 @Attribute:- Company Model:-
 @Params: name
 @Params: companyEmail
@@ -14,9 +13,6 @@
 @Params: createdAt
 @Params: companyIp
 @Params: companyLocation
-
-
-
 @Attribute:- Job Model:-
 @Params: companyId
 @Params: jobTitle
@@ -32,11 +28,9 @@
 @Params: salary
 @Params: duration
 @Params: applyUrl
-
 @Attribute:- Question Model:-
 @Params: jobId
 @Params: questions
-
 @Attribute:- Answer Model:-
 @Params: questionId
 @Params: companyId

@@ -5,7 +5,7 @@ import { Authentication, Authorization } from "../Middleware";
 
 // [ + ] User Routes
 CompanyRoutes.post("/register", CompanyController.registerUser);
-CompanyRoutes.post("/users/:id/verify/:token", CompanyController.verifyEmail);
+CompanyRoutes.post("/:id/verify/:token", CompanyController.verifyEmail);
 CompanyRoutes.post("/login", CompanyController.login);
 CompanyRoutes.post("/password/forgot", CompanyController.forgotPassword);
 CompanyRoutes.put("/password/reset/:token", CompanyController.resetPassword);
@@ -43,10 +43,10 @@ CompanyRoutes.put(
   Authorization("admin"),
   CompanyController.updateUserRole
 );
-CompanyRoutes.delete(
-  "/admin/user/:id",
-  Authentication,
-  Authorization("admin"),
-  CompanyController.deleteUser
-);
+// CompanyRoutes.delete(
+//   "/admin/user/:id",
+//   Authentication,
+//   Authorization("admin"),
+//   CompanyController.deleteUser
+// );
 export default CompanyRoutes;

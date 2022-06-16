@@ -6,19 +6,16 @@ import crypto from "crypto";
 import cloudinary from "cloudinary";
 const CompanyController = {
   async registerUser(req, res, next) {
+
     try {
       req.body = await Encryption.Decrypt(req.body.secureData);
+      console.log(req.body)
       let myCloud;
-
       myCloud = await cloudinary.v2.uploader.upload(req.body.profilePicture, {
         folder: "eComUserProfile",
         width: 150,
         crop: "scale",
       });
-
-      // const public_id = myCloud.public_id == undefine ? "" : myCloud.public_id;
-      // let myCloud_url =
-      //   myCloud.secure_url == undefine ? "" : myCloud.secure_url;
       const {
         name,
         companyEmail,
@@ -132,6 +129,26 @@ const CompanyController = {
       }
 
       if (!company.verified) {
+        const token = await TokenModel.create({
+          userId: company._id,
+          token: crypto.randomBytes(32).toString("hex"),
+        });
+        const url = `${FRONTEND_URL}/company/${company._id}/verify/${token.token}`;
+
+        const message = `Your Email Verification token is:- ${url} \n\n If you Don't requested this email then ignore it\n\n `;
+        const sendVerifyMail = await SendEmail({
+          email: company.companyEmail,
+          subject: `Email Verification`,
+          message,
+        });
+        if (!sendVerifyMail) {
+          return next(
+            new ErrorHandler(
+              "Something Error Occurred Please Try After Some Time",
+              422
+            )
+          );
+        }
         return next(new ErrorHandler("please verify your email address", 400));
       }
       const isPasswordMatched = await company.comparePassword(password);
@@ -343,11 +360,15 @@ const CompanyController = {
         };
       }
 
-      const company = await CompanyModel.findByIdAndUpdate(req.companyUser.id, newUserData, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false,
-      });
+      const company = await CompanyModel.findByIdAndUpdate(
+        req.companyUser.id,
+        newUserData,
+        {
+          new: true,
+          runValidators: true,
+          useFindAndModify: false,
+        }
+      );
 
       res.status(200).json({
         success: true,
