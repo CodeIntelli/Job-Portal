@@ -8,7 +8,7 @@ const CompanyController = {
   async registerUser(req, res, next) {
 
     try {
-      req.body = await Encryption.Decrypt(req.body.secureData);
+      // req.body = await Encryption.Decrypt(req.body.secureData);
       console.log(req.body)
       let myCloud;
       myCloud = await cloudinary.v2.uploader.upload(req.body.profilePicture, {
@@ -115,9 +115,10 @@ const CompanyController = {
 
   async login(req, res, next) {
     try {
-      req.body = await Encryption.Decrypt(req.body.secureData);
+      // req.body = await Encryption.Decrypt(req.body.secureData);
 
       const { companyEmail, companyPassword } = req.body;
+      console.log(req.body)
       if (!companyEmail || !companyPassword) {
         return next(new ErrorHandler("Please Enter Email & Password", 400));
       }
@@ -151,7 +152,8 @@ const CompanyController = {
         }
         return next(new ErrorHandler("please verify your email address", 400));
       }
-      const isPasswordMatched = await company.comparePassword(password);
+      console.log(companyPassword)
+      const isPasswordMatched = await company.comparePassword(companyPassword);
       if (!isPasswordMatched) {
         return next(new ErrorHandler("Invalid Email and password", 400));
       }
@@ -177,8 +179,10 @@ const CompanyController = {
     }
   },
   async forgotPassword(req, res, next) {
-    req.body = await Encryption.Decrypt(req.body.secureData);
-    const company = await CompanyModel.findOne({ email: req.body.email });
+    // req.body = await Encryption.Decrypt(req.body.secureData);
+    const company = await CompanyModel.findOne({
+      companyEmail: req.body.companyEmail,
+    });
     if (!company) {
       return next(new ErrorHandler("User Not Found", 404));
     }
@@ -197,7 +201,7 @@ const CompanyController = {
       });
       let successMessage = await Encryption.Encrypt({
         success: true,
-        message: `Email sent to ${user.email} successfully`,
+        message: `Email sent to ${company.email} successfully`,
       });
       res.status(200).json({
         secureData: successMessage,
@@ -213,7 +217,7 @@ const CompanyController = {
 
   async resetPassword(req, res, next) {
     try {
-      req.body = await Encryption.Decrypt(req.body.secureData);
+      // req.body = await Encryption.Decrypt(req.body.secureData);
       const resetPasswordToken = crypto
         .createHash("sha256")
         .update(req.params.token)
@@ -231,10 +235,10 @@ const CompanyController = {
         );
       }
 
-      if (req.body.password !== req.body.confirmPassword) {
+      if (req.body.companyPassword !== req.body.confirmPassword) {
         return next(new ErrorHandler("Password doesn't match", 400));
       }
-      company.password = req.body.password;
+      company.companyPassword = req.body.companyPassword;
       company.resetPasswordToken = undefined;
       company.resetPasswordExpire = undefined;
       await company.save();
