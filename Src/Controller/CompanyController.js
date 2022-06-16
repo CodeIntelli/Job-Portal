@@ -8,7 +8,7 @@ const CompanyController = {
   async registerUser(req, res, next) {
 
     try {
-      req.body = await Encryption.Decrypt(req.body.secureData);
+      // req.body = await Encryption.Decrypt(req.body.secureData);
       console.log(req.body)
       let myCloud;
       myCloud = await cloudinary.v2.uploader.upload(req.body.profilePicture, {
@@ -115,7 +115,7 @@ const CompanyController = {
 
   async login(req, res, next) {
     try {
-      req.body = await Encryption.Decrypt(req.body.secureData);
+      // req.body = await Encryption.Decrypt(req.body.secureData);
 
       const { companyEmail, companyPassword } = req.body;
       if (!companyEmail || !companyPassword) {
@@ -177,7 +177,7 @@ const CompanyController = {
     }
   },
   async forgotPassword(req, res, next) {
-    req.body = await Encryption.Decrypt(req.body.secureData);
+    // req.body = await Encryption.Decrypt(req.body.secureData);
     const company = await CompanyModel.findOne({ email: req.body.email });
     if (!company) {
       return next(new ErrorHandler("User Not Found", 404));
@@ -213,7 +213,7 @@ const CompanyController = {
 
   async resetPassword(req, res, next) {
     try {
-      req.body = await Encryption.Decrypt(req.body.secureData);
+      // req.body = await Encryption.Decrypt(req.body.secureData);
       const resetPasswordToken = crypto
         .createHash("sha256")
         .update(req.params.token)
