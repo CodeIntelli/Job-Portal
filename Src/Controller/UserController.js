@@ -342,7 +342,7 @@ const UserController = {
     }
   },
 
-  async deleteUser(req, res, next) {
+  async removeUser(req, res, next) {
     try {
       const user = await UserModel.findById(req.params.id);
 

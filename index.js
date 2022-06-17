@@ -1,13 +1,16 @@
 // package calling
 import express from "express";
 const app = express();
+import { PORT, CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET } from "./Config";
 import {
-  PORT,
-  CLOUD_NAME,
-  CLOUD_API_KEY,
-  CLOUD_API_SECRET,
-} from "./Config";
-import { UserRoutes,CompanyRoutes,JobRoutes,QuestionRoutes,CompanyAuthRoutes,UserAuthRoutes } from "./Src/Routes";
+  UserRoutes,
+  CompanyRoutes,
+  JobRoutes,
+  QuestionRoutes,
+  CompanyAuthRoutes,
+  UserAuthRoutes,
+  AnswerRoutes,
+} from "./Src/Routes";
 import "./Src/Database";
 import cors from "cors";
 import { Error } from "./Src/Middleware";
@@ -32,6 +35,9 @@ app.use("/api/v1/user/auth", UserAuthRoutes);
 app.use("/api/v1/user", UserRoutes);
 app.use("/api/v1/company/auth", CompanyAuthRoutes);
 app.use("/api/v1/company", CompanyRoutes);
+app.use("/api/v1/company/question", QuestionRoutes);
+app.use("/api/v1/company/job", JobRoutes);
+app.use("/api/v1/user/answer", AnswerRoutes);
 
 //* Middleware for Error
 app.use(Error);

@@ -19,7 +19,7 @@ UserRoutes.put(
 
 // [ + ] Admin Credentials
 UserRoutes.get(
-  "/details",
+  "/admin",
   UserAuth,
   Authorization("admin"),
   UserController.getAllUserDetails
@@ -40,6 +40,6 @@ UserRoutes.delete(
   "/admin/user/:id",
   UserAuth,
   Authorization("admin"),
-  UserController.deleteUser
+  UserController.removeUser
 );
 export default UserRoutes;
