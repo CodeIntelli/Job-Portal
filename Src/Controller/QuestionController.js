@@ -1,6 +1,6 @@
 import { QuestionModel } from "../Models";
 import { ErrorHandler } from "../Services";
-
+import { v4 as uuidv4 } from 'uuid';
 const QuestionController = {
     async addQuestion(req, res, next) {
         try {
@@ -9,9 +9,26 @@ const QuestionController = {
                 questions
             } = req.body;
 
+            let que_arr = [];
+            if (typeof questions === "string") {
+                que_arr.push(questions);
+            } else {
+                que_arr = questions;
+            }
+            const quefinalarr = [];
+            for (let i = 0; i < que_arr.length; i++) {
+                quefinalarr.push({
+                    id: uuidv4(),
+                    question: que_arr[i]
+                })
+            }
+            console.log(quefinalarr)
+            req.body.questions = quefinalarr;
+
             const question = await QuestionModel.create({
                 jobId,
-                questions
+                questions: quefinalarr,
+                companyId: req.body.id
             });
 
             return res.json({ data: question, message: 'Question addded' }).status(200);
@@ -48,6 +65,19 @@ const QuestionController = {
             console.log(error);
         }
     },
+
+    async deleteQuestion(req, res, next) {
+        try {
+            const question = await QuestionModel.findById(req.params.questionId);
+            if (!question) {
+                return next(new ErrorHandler('question not found'));
+            }
+            await question.remove();
+            return res.json({ message: 'Question Deleted Successfully' }).status(200);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 };
 
 export default QuestionController;

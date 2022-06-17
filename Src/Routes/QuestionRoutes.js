@@ -20,10 +20,10 @@ QuestionRoutes.get(
     QuestionController.retrieveQuestion
 );
 
-// QuestionRoutes.delete(
-//     "/deleteQuestion/:questionId",
-//     //Authorization("admin"),
-//     QuestionController.deleteQuestion
-// );
+QuestionRoutes.delete(
+    "/deleteQuestion/:questionId",
+    //Authorization("admin"),
+    QuestionController.deleteQuestion
+);
 
 export default QuestionRoutes;
