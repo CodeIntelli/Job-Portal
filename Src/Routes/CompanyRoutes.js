@@ -4,7 +4,7 @@ import { CompanyController } from "../Controller";
 import { CompanyAuth, Authorization } from "../Middleware";
 
 // [ + ]After Login this url is used for user
-CompanyRoutes.get("/profile", CompanyAuth, CompanyController.getUserDetails);
+CompanyRoutes.get("/profile", CompanyAuth, CompanyController.getCompanyDetails);
 CompanyRoutes.put(
   "/changePassword",
   CompanyAuth,
@@ -13,32 +13,32 @@ CompanyRoutes.put(
 CompanyRoutes.put(
   "/edit_profile",
   CompanyAuth,
-  CompanyController.updateUserDetails
+  CompanyController.updateCompanyDetails
 );
 
 // [ + ] Admin Credentials
 CompanyRoutes.get(
-  "/details",
+  "/admin",
   CompanyAuth,
   Authorization("admin"),
-  CompanyController.getAllUserDetails
+  CompanyController.getAllCompanyDetails
 );
 CompanyRoutes.get(
-  "/admin/user/:id",
+  "/admin/company/:id",
   CompanyAuth,
   Authorization("admin"),
-  CompanyController.getSingleUser
+  CompanyController.getSingleCompany
 );
 CompanyRoutes.put(
+  "/admin/company/:id",
+  CompanyAuth,
+  Authorization("admin"),
+  CompanyController.updateCompanyRole
+);
+CompanyRoutes.delete(
   "/admin/user/:id",
   CompanyAuth,
   Authorization("admin"),
-  CompanyController.updateUserRole
+  CompanyController.removeCompany
 );
-// CompanyRoutes.delete(
-//   "/admin/user/:id",
-//   CompanyAuth,
-//   Authorization("admin"),
-//   CompanyController.deleteUser
-// );
 export default CompanyRoutes;

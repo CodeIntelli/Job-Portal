@@ -6,10 +6,9 @@ import crypto from "crypto";
 import cloudinary from "cloudinary";
 const CompanyController = {
   async registerUser(req, res, next) {
-
     try {
       // req.body = await Encryption.Decrypt(req.body.secureData);
-      console.log(req.body)
+      console.log(req.body);
       let myCloud;
       myCloud = await cloudinary.v2.uploader.upload(req.body.profilePicture, {
         folder: "eComUserProfile",
@@ -118,7 +117,7 @@ const CompanyController = {
       // req.body = await Encryption.Decrypt(req.body.secureData);
 
       const { companyEmail, companyPassword } = req.body;
-      console.log(req.body)
+      console.log(req.body);
       if (!companyEmail || !companyPassword) {
         return next(new ErrorHandler("Please Enter Email & Password", 400));
       }
@@ -152,7 +151,7 @@ const CompanyController = {
         }
         return next(new ErrorHandler("please verify your email address", 400));
       }
-      console.log(companyPassword)
+      console.log(companyPassword);
       const isPasswordMatched = await company.comparePassword(companyPassword);
       if (!isPasswordMatched) {
         return next(new ErrorHandler("Invalid Email and password", 400));
@@ -252,7 +251,7 @@ const CompanyController = {
       res.status(500).json({ success: false, message: error.message });
     }
   },
-  async getUserDetails(req, res, next) {
+  async getCompanyDetails(req, res, next) {
     try {
       const company = await CompanyModel.findById(req.companyUser.id);
       res.status(200).json({ success: true, company });
@@ -260,7 +259,7 @@ const CompanyController = {
       res.status(500).json({ success: false, message: error.message });
     }
   },
-  async getAllUserDetails(req, res, next) {
+  async getAllCompanyDetails(req, res, next) {
     try {
       const company = await CompanyModel.find();
       let successMessage = await Encryption.Encrypt({ success: true, company });
@@ -296,7 +295,7 @@ const CompanyController = {
     }
   },
   // get single user - admin
-  async getSingleUser(req, res, next) {
+  async getSingleCompany(req, res, next) {
     try {
       const company = await CompanyModel.findById(req.params.id);
 
@@ -314,7 +313,7 @@ const CompanyController = {
       return new ErrorHandler(error, 500);
     }
   },
-  async updateUserRole(req, res, next) {
+  async updateCompanyRole(req, res, next) {
     try {
       const newUserData = {
         name: req.body.name,
@@ -336,7 +335,7 @@ const CompanyController = {
     }
   },
 
-  async updateUserDetails(req, res, next) {
+  async updateCompanyDetails(req, res, next) {
     try {
       const newUserData = {
         name: req.body.name,
@@ -381,7 +380,7 @@ const CompanyController = {
     }
   },
 
-  async deleteCompany(req, res, next) {
+  async removeCompany(req, res, next) {
     try {
       const company = await CompanyModel.findById(req.params.id);
 
