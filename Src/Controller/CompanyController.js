@@ -205,7 +205,6 @@ const CompanyController = {
       res.status(200).json({
         secureData: successMessage,
       });
-      // res.status(200).json();
     } catch (error) {
       company.resetPasswordToken = undefined;
       company.resetPasswordExpire = undefined;
@@ -248,8 +247,6 @@ const CompanyController = {
       res.status(200).json({
         secureData: successMessage,
       });
-
-      // SendToken(user, 200, res);
     } catch (error) {
       res.status(500).json({ success: false, message: error.message });
     }

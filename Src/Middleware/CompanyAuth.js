@@ -26,7 +26,7 @@ const CompanyAuthentication = async (req, res, next) => {
 
     if (!req.companyUser.verified) {
       const token = await TokenModel.create({
-        companyUserId: req.companyUser._id,
+        userId: req.companyUser._id,
         token: crypto.randomBytes(32).toString("hex"),
       });
       const url = `${FRONTEND_URL}/company/${req.companyUser._id}/verify/${token.token}`;
