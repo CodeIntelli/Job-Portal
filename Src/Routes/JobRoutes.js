@@ -1,10 +1,29 @@
 import express from 'express';
 let JobRoutes = express.Router();
 import { JobController } from "../Controller";
-import { Authentication, Authorization } from '../Middleware';
+// import { Authorization } from '../Middleware';
 
-JobRoutes.post("/addJob", JobController.addJob);
-JobRoutes.put("/updateJob/:jobId", JobController.updateJob);
-JobRoutes.get("/retrieveJob", JobController.retrieveJob);
+JobRoutes.post(
+    "/addJob",
+    //Authorization("admin"),
+    JobController.addJob
+);
+
+JobRoutes.put(
+    "/updateJob/:jobId",
+    //Authorization("admin"),
+    JobController.updateJob
+);
+
+JobRoutes.get(
+    "/retrieveJob",
+    JobController.retrieveJob
+);
+
+JobRoutes.delete(
+    "/deleteJob/:jobId",
+    //Authorization("admin"),
+    JobController.deleteJob
+);
 
 export default JobRoutes;

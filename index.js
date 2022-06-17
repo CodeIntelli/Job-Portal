@@ -33,6 +33,7 @@ app.use("/api/v1/user", UserRoutes);
 app.use("/api/v1/company/auth", CompanyAuthRoutes);
 app.use("/api/v1/company", CompanyRoutes);
 app.use("/api/v1/job", JobRoutes);
+app.use("/api/v1/question", QuestionRoutes);
 
 //* Middleware for Error
 app.use(Error);

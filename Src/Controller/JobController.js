@@ -4,7 +4,6 @@ import { ErrorHandler } from "../Services";
 const JobController = {
     async addJob(req, res, next) {
         try {
-            console.log(req.body);
             const {
                 companyId,
                 jobTitle,
@@ -40,7 +39,6 @@ const JobController = {
             });
 
             return res.json({ data: job, message: 'Job addded' }).status(200);
-
         } catch (error) {
             console.log(error);
             return next(new ErrorHandler(error, 500));
@@ -48,13 +46,12 @@ const JobController = {
     },
 
     async updateJob(req, res, next) {
-        const job_data = await JobModel.findOne({ _id: req.params.jobId });
-        console.log(job_data);
-        if (!job_data) {
+        const job = await JobModel.findOne({ _id: req.params.jobId });
+
+        if (!job) {
             return next(new ErrorHandler("Job not found", 400));
         }
 
-        // ! remain::::: allow to update job only if "user : Admin "
         const newJobData = {
             jobTitle: req.body.jobTitle,
             jobDesc: req.body.jobDesc,
@@ -71,14 +68,35 @@ const JobController = {
             applyUrl: req.body.applyUrl
         }
 
-        const job = await JobModel.findByIdAndUpdate(
+        const newJob = await JobModel.findByIdAndUpdate(
             req.params.jobId,
             newJobData
         );
 
-        return res.json({ data: job, message: 'Job updated' }).status(200);
-    }
+        return res.json({ data: newJob, message: 'Job updated' }).status(200);
+    },
 
+    async retrieveJob(req, res, next) {
+        try {
+            const jobs = await JobModel.find();
+            return res.json({ data: jobs, message: 'Jobs retrieved' }).status(200);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    async deleteJob(req, res, next) {
+        try {
+            const job = await JobModel.findById(req.params.jobId);
+            if (!job) {
+                return next(new ErrorHandler('Job not found'));
+            }
+            await job.remove();
+            return res.json({ message: 'Job Deleted Successfully' }).status(200);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 };
 
