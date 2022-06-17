@@ -48,11 +48,13 @@ const JobController = {
     },
 
     async updateJob(req, res, next) {
-        const { jobId } = req.params.jobId;
-        if (!jobId) {
+        const job_data = await JobModel.findOne({ _id: req.params.jobId });
+        console.log(job_data);
+        if (!job_data) {
             return next(new ErrorHandler("Job not found", 400));
         }
 
+        // ! remain::::: allow to update job only if "user : Admin "
         const newJobData = {
             jobTitle: req.body.jobTitle,
             jobDesc: req.body.jobDesc,
@@ -74,8 +76,10 @@ const JobController = {
             newJobData
         );
 
-        return res.json({ /* data: job, */ message: 'Job updated' }).status(200);
+        return res.json({ data: job, message: 'Job updated' }).status(200);
     }
+
+
 };
 
 export default JobController;
