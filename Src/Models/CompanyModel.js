@@ -84,10 +84,10 @@ const CompanySchema = new mongoose.Schema({
 
 // Bcrypt
 CompanySchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
+  if (!this.isModified("companyPassword")) {
     next();
   }
-  this.password = await bcrypt.hash(this.password, 10);
+  this.companyPassword = await bcrypt.hash(this.companyPassword, 10);
 });
 
 // JWT TOKEN
@@ -99,7 +99,8 @@ CompanySchema.methods.getJWTToken = function () {
 
 // Compare Password
 CompanySchema.methods.comparePassword = async function (enteredpassword) {
-  return await bcrypt.compare(enteredpassword, this.password);
+  console.log("enteredPassword", enteredpassword);
+  return await bcrypt.compare(enteredpassword, this.companyPassword);
 };
 
 // Generating Password Reset Token

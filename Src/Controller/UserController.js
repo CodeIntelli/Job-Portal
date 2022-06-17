@@ -15,9 +15,7 @@ const UserController = {
           crop: "scale",
         });
       }
-      // const public_id = myCloud.public_id == undefine ? "" : myCloud.public_id;
-      // let myCloud_url =
-      //   myCloud.secure_url == undefine ? "" : myCloud.secure_url;
+
       const { name, email, password, userLocation } = req.body;
 
       const user = await UserModel.create({
@@ -138,6 +136,7 @@ const UserController = {
       res.status(500).json({ success: false, message: error });
     }
   },
+
   async forgotPassword(req, res, next) {
     req.body = await Encryption.Decrypt(req.body.secureData);
     const user = await UserModel.findOne({ email: req.body.email });
@@ -216,6 +215,7 @@ const UserController = {
       res.status(500).json({ success: false, message: error.message });
     }
   },
+
   async getUserDetails(req, res, next) {
     try {
       const user = await UserModel.findById(req.user.id);
@@ -224,9 +224,9 @@ const UserController = {
       res.status(500).json({ success: false, message: error.message });
     }
   },
+
   async getAllUserDetails(req, res, next) {
     try {
-      
       const users = await UserModel.find();
       let successMessage = await Encryption.Encrypt({ success: true, users });
       res.status(200).json({
@@ -278,6 +278,7 @@ const UserController = {
       return new ErrorHandler(error, 500);
     }
   },
+
   async updateUserRole(req, res, next) {
     try {
       const newUserData = {
